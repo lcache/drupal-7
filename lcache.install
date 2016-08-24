@@ -1,0 +1,89 @@
+<?php
+/**
+ * Implements hook_requirements().
+ */
+function lcache_requirements($phase) {
+  // @TODO: Version check for APCu.
+  // @TODO: Check for a sane apcu_sma_info() configuration here.
+}
+
+function lcache_schema() {
+  $schema['lcache_events'] = array(
+    'description' => 'Stores a stream of cache changes for coherency management.',
+    'fields' => array(
+      'event_id' => array(
+        'description' => 'Primary Key: Event ID.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'pool' => array(
+        'description' => 'PHP process pool that wrote the change.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'address' => array(
+        'description' => 'Cache entry address (bin and key).',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+      'value' => array(
+        'description' => 'Cache entry value.',
+        'type' => 'blob',
+        'not null' => FALSE,
+        'size' => 'big',
+      ),
+      'expiration' => array(
+        'description' => 'A Unix timestamp indicating when the cache entry should expire, or NULL for never.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+      'created' => array(
+        'description' => 'A Unix timestamp indicating when the cache entry was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array(
+      'expiration' => array('expiration'),
+      'lookup_miss' => array('address', 'event_id'),
+    ),
+    'primary key' => array('event_id'),
+  );
+  $schema['lcache_tags'] = array(
+    'description' => 'Stores mappings from tags to cache items.',
+    'fields' => array(
+      'tag' => array(
+        'description' => 'Cache tag.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+      'event_id' => array(
+        'description' => 'The event_id associated with the cache entry.',
+        'type' => 'int',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array(
+      'rewritten_entry' => array('address'),
+    ),
+    'primary key' => array('tag', 'address'),
+    'foreign keys' => array(
+      'lcache_events_event_id' => array(
+        'table' => 'lcache_events',
+        'columns' => array('event_id' => 'event_id'),
+      ),
+    ),
+  );
+
+  return $schema;
+}

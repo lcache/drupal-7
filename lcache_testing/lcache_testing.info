@@ -1,0 +1,4 @@
+name = "LCache testing framework"
+description = "Provides testing capabilities for APCu"
+package = Performance
+core = 7.x

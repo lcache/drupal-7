@@ -1,0 +1,51 @@
+<?php
+function lcache_testing_schema() {
+  $schema['cache_testing'] = array(
+      'description' => 'Generic cache table for testing cache items.',
+      'fields' => array(
+      'event_id' => array(
+        'description' => 'Primary Key: Event ID.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'pool' => array(
+        'description' => 'PHP process pool that wrote the change.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'key' => array(
+        'description' => 'Cache key within bin.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+      'value' => array(
+        'description' => 'A collection of data to cache.',
+        'type' => 'blob',
+        'not null' => FALSE,
+        'size' => 'big',
+      ),
+      'expiration' => array(
+        'description' => 'A Unix timestamp indicating when the cache entry should expire, or NULL for never.',
+        'type' => 'int',
+        'not null' => FALSE,
+        'default' => NULL,
+      ),
+      'created' => array(
+        'description' => 'A Unix timestamp indicating when the cache entry was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array(
+      'expiration' => array('expiration'),
+      'lookup_miss' => array('key', 'event_id'),
+    ),
+    'primary key' => array('event_id'),
+    );
+  return $schema;
+}

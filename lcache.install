@@ -74,9 +74,9 @@ function lcache_schema() {
       ),
     ),
     'indexes' => array(
-      'rewritten_entry' => array('address'),
+      'rewritten_entry' => array('event_id'),
     ),
-    'primary key' => array('tag', 'address'),
+    'primary key' => array('tag', 'event_id'),
     'foreign keys' => array(
       'lcache_events_event_id' => array(
         'table' => 'lcache_events',

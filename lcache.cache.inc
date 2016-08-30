@@ -1,6 +1,6 @@
 <?php
 
-if (!class_exists('\LCache\LCacheNullL1')) {
+if (!class_exists('\LCache\NullL1')) {
   require_once 'vendor/autoload.php';
 }
 
@@ -43,15 +43,15 @@ class LCache implements DrupalCacheInterface {
     $this->bin = $bin;
 
     // Use the Null L1 cache for the CLI.
-    $l1 = new \LCache\LCache\LCacheNullL1();
+    $l1 = new \LCache\NullL1();
     if (php_sapi_name() !== 'cli') {
-      $l1 = new \LCache\LCache\LCacheAPCuL1();
+      $l1 = new \LCache\APCuL1();
     }
 
-    $l2 = new \LCache\LCache\LCacheDatabaseL2(lcache_get_pdo_handle());
-    //$l2 = new \LCache\LCache\LCacheStaticL2();
+    $l2 = new \LCache\DatabaseL2(lcache_get_pdo_handle());
+    //$l2 = new \LCache\StaticL2();
 
-    $this->integrated = new \LCache\LCache\LCacheIntegrated($l1, $l2);
+    $this->integrated = new \LCache\Integrated($l1, $l2);
     //header('LCache-Pool: ' . $this->integrated->getPool());
   }
 
@@ -59,7 +59,7 @@ class LCache implements DrupalCacheInterface {
     if ($cid === '*') {
       return NULL;
     }
-    return new \LCache\LCache\LCacheAddress($this->bin, $cid);
+    return new \LCache\Address($this->bin, $cid);
   }
 
   /**

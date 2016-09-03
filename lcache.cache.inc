@@ -56,9 +56,6 @@ class LCache implements DrupalCacheInterface {
   }
 
   protected function getAddress($cid) {
-    if ($cid === '*') {
-      return NULL;
-    }
     return new \LCache\Address($this->bin, $cid);
   }
 
@@ -113,15 +110,28 @@ class LCache implements DrupalCacheInterface {
 
   /**
    * Implements DrupalCacheInterface::clear().
-   * @TODO
-   *   - take into account CACHE_PERMANENT/CACHE_TEMPORARY
    */
   public function clear($cid = NULL, $wildcard = FALSE) {
-    if ($wildcard) {
-      $cid = NULL;
+    if (empty($cid)) {
+      // Flush expired, temporary cache entries now.
+      $this->integrated->collectGarbage();
     }
-    $address = $this->getAddress($cid);
-    $this->integrated->delete($address);
+    else {
+      if ($wildcard) {
+        $address = $this->getAddress();
+        $this->integrated->delete($address);
+      }
+      elseif (is_array($cid)) {
+        foreach ($cid as $cid_entry) {
+          $address = $this->getAddress($cid);
+          $this->integrated->delete($address);
+        }
+      }
+      else {
+        $address = $this->getAddress($cid);
+        $this->integrated->delete($address);
+      }
+    }
   }
 
   /**

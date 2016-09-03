@@ -7,11 +7,9 @@ among the L1 caches).
 Currently only supported on Pantheon, but there's nothing that
 inherently relies on anything Pantheon-specific.
 
-See also: https://github.com/lcache/lcache
+Upstream library: https://github.com/lcache/lcache
 
 ## Usage
-
-### Drupal 7
 
  1. Upload the module to your site.
     a. If using Composer to manage your sites modules:  
@@ -25,26 +23,3 @@ See also: https://github.com/lcache/lcache
 
     $conf['cache_backends'][] = 'sites/all/modules/lcache/lcache.cache.inc';
     $conf['cache_default_class'] = 'LCache';
-
-### Drupal 8
-
-Coming soon.
-
-### WordPress
-
-Coming soon.
-
-## Testing (on Fedora)
-
- 1. Install packages:
-
-    sudo dnf install -y php-cli php-phpunit-PHPUnit php-phpunit-DbUnit php-pecl-apcu
-
- 2. Enable APCu caching for the CLI:
-
-    echo "apc.enable_cli=1" | sudo tee -a /etc/php.d/40-apcu.ini
-
- 3. From the "lcache" directory:
-
-    composer install
-    composer test

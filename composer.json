@@ -1,7 +1,7 @@
 {
     "name": "drupal/lcache",
     "description": "LCache module.",
-    "license": "MIT",
+    "license": "GPLv2",
     "authors": [
         {
             "name": "David Strauss",

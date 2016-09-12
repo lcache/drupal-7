@@ -51,8 +51,7 @@ class LCache implements DrupalCacheInterface {
     $l2 = new \LCache\DatabaseL2(lcache_get_pdo_handle());
     //$l2 = new \LCache\StaticL2();
 
-    $this->integrated = new \LCache\Integrated($l1, $l2);
-    //header('LCache-Pool: ' . $this->integrated->getPool());
+    $this->integrated = new \LCache\Integrated($l1, $l2, 100);
   }
 
   protected function getAddress($cid) {

@@ -23,3 +23,7 @@ Upstream library: https://github.com/lcache/lcache
 
     $conf['cache_backends'][] = 'sites/all/modules/lcache/lcache.cache.inc';
     $conf['cache_default_class'] = 'LCache';
+    // The 'cache_form' bin must be assigned to non-volatile storage.
+    $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
+    // Definitely don't store page cache in LCache.
+    $conf['cache_class_cache_page'] = 'DrupalDatabaseCache';

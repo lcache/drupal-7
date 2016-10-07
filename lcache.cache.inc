@@ -81,7 +81,6 @@ class LCache implements DrupalCacheInterface {
    * Implements DrupalCacheInterface::getMultiple().
    */
   public function getMultiple(&$cids) {
-    if (empty($cids)) return;
     $cache = array();
     foreach ($cids as $cid) {
       $c = $this->get($cid);

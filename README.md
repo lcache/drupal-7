@@ -12,21 +12,32 @@ Upstream library: https://github.com/lcache/lcache
 ## Usage
 
  1. Upload the module to your site.
-    a. If using Composer to manage your sites modules:  
-       composer require drupal/lcache
-    b. If not using Composer:
-       drush dl lcache
-       cd sites/all/modules/lcache
-       composer install
- 2. Install the module (so Drupal creates the schema).
+     a. If using Composer to manage your site's modules:
+
+        composer require drupal/lcache
+
+     b. If not using Composer:
+
+        drush dl lcache
+        cd sites/all/modules/lcache
+        composer install --no-dev
+
+     c. If you are pushing to a remote location (e.g. Pantheon) you will need to
+        force-commit the 'vendor' directory so that the core lcache library is
+        pushed along with the module:
+
+        git add --force vendor
+        git push origin master
+
+ 2. Install the module (so Drupal creates the database schema).
  3. Configure `settings.php` to use the cache:
 
-    $conf['cache_backends'][] = 'sites/all/modules/lcache/lcache.cache.inc';
-    $conf['cache_default_class'] = 'LCache';
-    // The 'cache_form' bin must be assigned to non-volatile storage.
-    $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
-    // Definitely don't store page cache in LCache.
-    $conf['cache_class_cache_page'] = 'DrupalDatabaseCache';
+        $conf['cache_backends'][] = 'sites/all/modules/lcache/lcache.cache.inc';
+        $conf['cache_default_class'] = 'LCache';
+        // The 'cache_form' bin must be assigned to non-volatile storage.
+        // And if you use page cache, you probably don't want it in LCache.
+        $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
+        $conf['cache_class_cache_page'] = 'DrupalDatabaseCache';
 
 ### With Composer Manager
 

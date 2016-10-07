@@ -88,6 +88,7 @@ class LCache implements DrupalCacheInterface {
         $cache[$cid] = $c;
       }
     }
+    $cids = array_diff($cids, array_keys($cache));
     return $cache;
   }
 

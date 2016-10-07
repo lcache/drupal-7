@@ -21,6 +21,7 @@ function lcache_schema() {
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
+        'binary' => TRUE,
         'default' => '',
       ),
       'address' => array(
@@ -28,12 +29,14 @@ function lcache_schema() {
         'type' => 'varchar',
         'length' => 255,
         'not null' => FALSE,
+        'binary' => TRUE,
         'default' => NULL,
       ),
       'value' => array(
         'description' => 'Cache entry value.',
         'type' => 'blob',
         'not null' => FALSE,
+        'binary' => TRUE,
         'size' => 'big',
       ),
       'expiration' => array(
@@ -63,6 +66,7 @@ function lcache_schema() {
         'type' => 'varchar',
         'length' => 255,
         'not null' => FALSE,
+        'binary' => TRUE,
         'default' => NULL,
       ),
       'event_id' => array(

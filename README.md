@@ -27,3 +27,12 @@ Upstream library: https://github.com/lcache/lcache
     $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
     // Definitely don't store page cache in LCache.
     $conf['cache_class_cache_page'] = 'DrupalDatabaseCache';
+
+### With Composer Manager
+
+Composer Manager is not officially supported for use with LCache, but there
+are reports of it working properly by adding the following early (before LCache
+is included) in `settings.php`:
+
+    require_once DRUPAL_ROOT . '/sites/all/modules/composer_manager/composer_manager.module';
+    composer_manager_register_autoloader();

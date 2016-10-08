@@ -74,6 +74,7 @@ function lcache_schema() {
         'type' => 'int',
         'length' => 255,
         'not null' => TRUE,
+        'unsigned' => TRUE,
         'default' => 0,
       ),
     ),

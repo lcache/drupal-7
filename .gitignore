@@ -1,4 +1,4 @@
-.DS_Store
-phpunit.xml
-vendor
 composer.lock
+/drush/
+/vendor/
+.DS_Store

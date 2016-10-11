@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Implements hook_requirements().
  */
@@ -7,6 +8,9 @@ function lcache_requirements($phase) {
   // @TODO: Check for a sane apcu_sma_info() configuration here.
 }
 
+/**
+ * Implements hook_schema().
+ */
 function lcache_schema() {
   $schema['lcache_events'] = array(
     'description' => 'Stores a stream of cache changes for coherency management.',
@@ -27,7 +31,7 @@ function lcache_schema() {
       'address' => array(
         'description' => 'Cache entry address (bin and key).',
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 512,
         'not null' => FALSE,
         'binary' => TRUE,
         'default' => NULL,
@@ -64,7 +68,7 @@ function lcache_schema() {
       'tag' => array(
         'description' => 'Cache tag.',
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 128,
         'not null' => FALSE,
         'binary' => TRUE,
         'default' => NULL,
@@ -72,7 +76,6 @@ function lcache_schema() {
       'event_id' => array(
         'description' => 'The event_id associated with the cache entry.',
         'type' => 'int',
-        'length' => 255,
         'not null' => TRUE,
         'unsigned' => TRUE,
         'default' => 0,

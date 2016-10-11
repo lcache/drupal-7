@@ -54,7 +54,7 @@ class LCache implements DrupalCacheInterface {
     $this->integrated = new \LCache\Integrated($l1, $l2, 100);
   }
 
-  protected function getAddress($cid) {
+  protected function getAddress($cid=NULL) {
     return new \LCache\Address($this->bin, $cid);
   }
 

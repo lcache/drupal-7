@@ -19,6 +19,7 @@ function lcache_schema() {
         'description' => 'Primary Key: Event ID.',
         'type' => 'serial',
         'not null' => TRUE,
+        'unsigned' => TRUE,
       ),
       'pool' => array(
         'description' => 'PHP process pool that wrote the change.',

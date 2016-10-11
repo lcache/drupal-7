@@ -11,5 +11,5 @@
     ],
     "require": {
         "lcache/lcache": "0.3.*"
-    },
+    }
 }

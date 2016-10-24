@@ -122,7 +122,7 @@ class LCache implements DrupalCacheInterface {
       }
       elseif (is_array($cid)) {
         foreach ($cid as $cid_entry) {
-          $address = $this->getAddress($cid);
+          $address = $this->getAddress($cid_entry);
           $this->integrated->delete($address);
         }
       }
